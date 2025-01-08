@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 
-export const Metals = () => {
+export const Metals = ({ setter }) => {
     const [metals, setMetals] = useState([])
     const [loading, setLoading] = useState(true)
 
@@ -19,7 +19,12 @@ export const Metals = () => {
             return <div>
                 {
                     metals.map(
-                        metal => <p key={`metal--${metal.id}`}>{metal.metal}</p>
+                        metal => <div key={`metal--${metal.id}`}>
+                            <input name="metal"
+                                   onChange={() => setter(metal.id) }
+                                   type="radio"
+                                   value={metal.id} /> {metal.metal}
+                        </div>
                     )
                 }
             </div>
@@ -32,7 +37,7 @@ export const Metals = () => {
         () => {
             retrieveMetalsFromAPI()
         },
-        [] // If blank, only runs after initial render
+        []
     )
 
     return <>
