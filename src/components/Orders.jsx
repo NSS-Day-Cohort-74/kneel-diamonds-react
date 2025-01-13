@@ -1,21 +1,8 @@
 import { useEffect, useState } from "react"
 
-export const Orders = () => {
-    const [orders, setOrders] = useState([])
-    const [loading, setLoading] = useState(true)
-
-    const retrieveOrdersFromAPI = async () => {
-        const request = await fetch("http://localhost:8000/orders?_expand=metal&_expand=size&_expand=style")
-        const apiOrders = await request.json()
-        setOrders(apiOrders)
-
-        setTimeout(() => {
-            setLoading(false)
-        }, 500)
-    }
+export const Orders = ({ orders, retrieveOrdersFromAPI }) => {
 
     const showOrders = () => {
-        if (!loading) {
             return <div>
                 {
                     orders.map(
@@ -30,9 +17,7 @@ export const Orders = () => {
                     )
                 }
             </div>
-        }
 
-        return <h3>Loading orders...</h3>
     }
 
     useEffect(
@@ -42,9 +27,5 @@ export const Orders = () => {
         []
     )
 
-    return <>
-        {
-            showOrders()
-        }
-    </>
+    return <> { showOrders() } </>
 }

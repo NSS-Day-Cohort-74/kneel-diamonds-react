@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 
-export const DiamondSizes = () => {
+export const DiamondSizes = ({ setter }) => {
     const [diamondSizes, setDiamondSizes] = useState([])
     const [loading, setLoading] = useState(true)
 
@@ -8,20 +8,19 @@ export const DiamondSizes = () => {
         const request = await fetch("http://localhost:8000/sizes")
         const apiDiamondSizes = await request.json()
         setDiamondSizes(apiDiamondSizes)
-
-        setTimeout(() => {
-            setLoading(false)
-        }, 1000)
+        setLoading(false)
     }
 
     const showDiamondSizes = () => {
         if (!loading) {
             return <div>
+                <h2>Choose a Size</h2>
                 {
                     diamondSizes.map(
                         diamondSize => <div key={`diamondSize--${diamondSize.id}`}>
                             <input name="diamondSize"
                                    type="radio"
+                                   onChange={() => setter(diamondSize.id) }
                                    value={diamondSize.id}  /> {diamondSize.carets}
                         </div>
                     )

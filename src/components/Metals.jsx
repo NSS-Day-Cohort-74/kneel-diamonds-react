@@ -8,15 +8,13 @@ export const Metals = ({ setter }) => {
         const request = await fetch("http://localhost:8000/metals")
         const apiMetals = await request.json()
         setMetals(apiMetals)
-
-        setTimeout(() => {
-            setLoading(false)
-        }, 3000)
+        setLoading(false)
     }
 
     const showMetals = () => {
         if (!loading) {
             return <div>
+                <h2>Choose a Metal</h2>
                 {
                     metals.map(
                         metal => <div key={`metal--${metal.id}`}>
@@ -40,9 +38,5 @@ export const Metals = ({ setter }) => {
         []
     )
 
-    return <>
-        {
-            showMetals()
-        }
-    </>
+    return <> { showMetals() } </>
 }

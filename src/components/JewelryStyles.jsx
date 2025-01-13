@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 
-export const JewelryStyles = () => {
+export const JewelryStyles = ({ setter }) => {
     const [jewelryStyles, setJewelryStyles] = useState([])
     const [loading, setLoading] = useState(true)
 
@@ -8,19 +8,17 @@ export const JewelryStyles = () => {
         const request = await fetch("http://localhost:8000/styles")
         const apiJewelryStyles = await request.json()
         setJewelryStyles(apiJewelryStyles)
-
-        setTimeout(() => {
-            setLoading(false)
-        }, 2000)
+        setLoading(false)
     }
 
     const showJewelryStyles = () => {
         if (!loading) {
             return <div>
+                <h2>Choose a Style</h2>
                 {
                     jewelryStyles.map(
                         jewelryStyle => <div key={`jewelryStyle--${jewelryStyle.id}`}>
-                            <input
+                            <input onChange={() => setter(jewelryStyle.id) }
                                 name="jewelryStyle"
                                 type="radio"
                                 value={jewelryStyle.id} /> {jewelryStyle.style}
