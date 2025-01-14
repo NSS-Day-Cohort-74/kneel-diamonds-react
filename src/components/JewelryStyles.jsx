@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 
-export const JewelryStyles = ({ setter }) => {
+export const JewelryStyles = ({ setter, order }) => {
     const [jewelryStyles, setJewelryStyles] = useState([])
     const [loading, setLoading] = useState(true)
 
@@ -21,6 +21,7 @@ export const JewelryStyles = ({ setter }) => {
                             <input onChange={() => setter(jewelryStyle.id) }
                                 name="jewelryStyle"
                                 type="radio"
+                                checked={jewelryStyle.id === order.styleId}
                                 value={jewelryStyle.id} /> {jewelryStyle.style}
                         </div>
                     )

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 
-export const DiamondSizes = ({ setter }) => {
+export const DiamondSizes = ({ setter, order }) => {
     const [diamondSizes, setDiamondSizes] = useState([])
     const [loading, setLoading] = useState(true)
 
@@ -20,6 +20,7 @@ export const DiamondSizes = ({ setter }) => {
                         diamondSize => <div key={`diamondSize--${diamondSize.id}`}>
                             <input name="diamondSize"
                                    type="radio"
+                                   checked={diamondSize.id === order.sizeId}
                                    onChange={() => setter(diamondSize.id) }
                                    value={diamondSize.id}  /> {diamondSize.carets}
                         </div>

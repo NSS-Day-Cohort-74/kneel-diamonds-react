@@ -1,21 +1,14 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Orders } from './Orders.jsx'
-import { Metals } from './Metals.jsx'
-import { DiamondSizes } from './DiamondSizes.jsx'
-import { JewelryStyles } from './JewelryStyles.jsx'
-import { OrderButton } from './NewOrderButton.jsx'
 import './KneelDiamonds.css'
 import { Navbar } from './NavBar.jsx'
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, useNavigate } from 'react-router-dom'
+import { NewOrder } from './NewOrder.jsx'
 
 function KneelDiamonds() {
   const [chosenMetal, setChosenMetal] = useState(0)
   const [chosenSize, setChosenSize] = useState(0)
   const [chosenStyle, setChosenStyle] = useState(0)
-
-
-
-
   const [orders, setOrders] = useState([])
 
   const retrieveOrdersFromAPI = async () => {
@@ -24,10 +17,9 @@ function KneelDiamonds() {
     setOrders(apiOrders)
   }
 
-
-
-
-
+  useEffect(() => {
+    retrieveOrdersFromAPI()
+  }, [])
 
   const placeOrder = () => {
     if (chosenMetal > 0 && chosenSize > 0 && chosenStyle > 0) {
@@ -49,6 +41,8 @@ function KneelDiamonds() {
     }
   }
 
+  let navigate = useNavigate()
+
 
   return (
     <>
@@ -57,22 +51,25 @@ function KneelDiamonds() {
 
       <Routes>
         <Route path="/" element={
-          <article style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-evenly",
-            columnGap: "5rem"
-          }}>
-            <Metals setter={setChosenMetal} />
-            <JewelryStyles setter={setChosenStyle} />
-            <DiamondSizes setter={setChosenSize} />
-            <OrderButton orderPlacer={placeOrder} />
-          </article>
-
+          <button onClick={() => navigate("/orders/form",
+            {
+              state:{
+                type: "create"
+              }
+            }
+          )}>Place New Order</button>
         } />
 
         <Route path="/orders" element={
           <Orders orders={orders} retrieveOrdersFromAPI={retrieveOrdersFromAPI} />
+        } />
+
+        <Route path="/orders/form" element={
+          <NewOrder setChosenMetal={setChosenMetal}
+                setChosenSize={setChosenSize}
+                setChosenStyle={setChosenStyle}
+                placeOrder={placeOrder}
+                type="create" />
         } />
       </Routes>
 
