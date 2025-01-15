@@ -6,10 +6,15 @@ import { OrderButton } from "./NewOrderButton.jsx"
 import { EditOrderButton } from "./EditOrderButton.jsx"
 import { useEffect, useState } from "react"
 
-export const NewOrder = ({ placeOrder, setChosenMetal, setChosenSize, setChosenStyle}) => {
+export const NewOrder = ({
+    placeOrder, chosenMetal, chosenSize, setModifiedOrder,
+    chosenStyle, setChosenMetal, setChosenSize,
+    setChosenStyle, editOrder}) => {
 
     const [apiOrder, setAPIOrder] = useState({id: 0})
     const location = useLocation();
+
+    setModifiedOrder(location.state.chosenOrder)
 
     useEffect(
         () => {
@@ -30,16 +35,14 @@ export const NewOrder = ({ placeOrder, setChosenMetal, setChosenSize, setChosenS
         justifyContent: "space-evenly",
         columnGap: "5rem"
       }}>
-        Type of operation: { location?.state?.type }
-
-        <Metals setter={setChosenMetal} order={apiOrder} />
-        <JewelryStyles setter={setChosenStyle} order={apiOrder} />
-        <DiamondSizes setter={setChosenSize} order={apiOrder} />
+        <Metals setter={setChosenMetal} chosenMetal={chosenMetal} order={apiOrder} />
+        <JewelryStyles setter={setChosenStyle} order={apiOrder} chosenStyle={chosenStyle} />
+        <DiamondSizes setter={setChosenSize} order={apiOrder} chosenSize={chosenSize} />
 
         {
             location?.state?.type === "create"
                 ? <OrderButton orderPlacer={placeOrder}  />
-                : <EditOrderButton  orderPlacer={placeOrder} />
+                : <EditOrderButton  orderPlacer={editOrder} />
         }
 
       </article>

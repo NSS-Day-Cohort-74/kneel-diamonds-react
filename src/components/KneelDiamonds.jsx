@@ -1,14 +1,15 @@
 import { useState, useEffect } from 'react'
 import { Orders } from './Orders.jsx'
-import './KneelDiamonds.css'
 import { Navbar } from './NavBar.jsx'
 import { Route, Routes, useNavigate } from 'react-router-dom'
 import { NewOrder } from './NewOrder.jsx'
+import './KneelDiamonds.css'
 
 function KneelDiamonds() {
   const [chosenMetal, setChosenMetal] = useState(0)
   const [chosenSize, setChosenSize] = useState(0)
   const [chosenStyle, setChosenStyle] = useState(0)
+  const [orderBeingModified, setModifiedOrder] = useState({})
   const [orders, setOrders] = useState([])
 
   const retrieveOrdersFromAPI = async () => {
@@ -20,6 +21,21 @@ function KneelDiamonds() {
   useEffect(() => {
     retrieveOrdersFromAPI()
   }, [])
+
+  const editOrder = () => {
+      fetch(`http://localhost:8000/orders/${orderBeingModified.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          metalId: chosenMetal,
+          styleId: chosenStyle,
+          sizeId: chosenSize
+        })
+      })
+        .then(() => retrieveOrdersFromAPI())
+  }
 
   const placeOrder = () => {
     if (chosenMetal > 0 && chosenSize > 0 && chosenStyle > 0) {
@@ -68,7 +84,12 @@ function KneelDiamonds() {
           <NewOrder setChosenMetal={setChosenMetal}
                 setChosenSize={setChosenSize}
                 setChosenStyle={setChosenStyle}
+                chosenMetal={chosenMetal}
+                chosenSize={chosenSize}
+                chosenStyle={chosenStyle}
                 placeOrder={placeOrder}
+                editOrder={editOrder}
+                setModifiedOrder={setModifiedOrder}
                 type="create" />
         } />
       </Routes>

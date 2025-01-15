@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 
-export const Metals = ({ setter, order }) => {
+export const Metals = ({ setter, order, chosenMetal }) => {
     const [metals, setMetals] = useState([])
     const [loading, setLoading] = useState(true)
 
@@ -10,6 +10,15 @@ export const Metals = ({ setter, order }) => {
         setMetals(apiMetals)
         setLoading(false)
     }
+
+    useEffect(
+        () => {
+            if ("id" in order) {
+                setter(order.metalId)
+            }
+        },
+        [order]
+    )
 
     const showMetals = () => {
         if (!loading) {
@@ -21,7 +30,7 @@ export const Metals = ({ setter, order }) => {
                             <input name="metal"
                                    onChange={() => setter(metal.id) }
                                    type="radio"
-                                   checked={metal.id === order.metalId}
+                                   checked={metal.id === chosenMetal}
                                    value={metal.id} /> {metal.metal}
                         </div>
                     )

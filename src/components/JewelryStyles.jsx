@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 
-export const JewelryStyles = ({ setter, order }) => {
+export const JewelryStyles = ({ setter, order, chosenStyle }) => {
     const [jewelryStyles, setJewelryStyles] = useState([])
     const [loading, setLoading] = useState(true)
 
@@ -10,6 +10,15 @@ export const JewelryStyles = ({ setter, order }) => {
         setJewelryStyles(apiJewelryStyles)
         setLoading(false)
     }
+
+    useEffect(
+        () => {
+            if ("id" in order) {
+                setter(order.styleId)
+            }
+        },
+        [order]
+    )
 
     const showJewelryStyles = () => {
         if (!loading) {
@@ -21,7 +30,7 @@ export const JewelryStyles = ({ setter, order }) => {
                             <input onChange={() => setter(jewelryStyle.id) }
                                 name="jewelryStyle"
                                 type="radio"
-                                checked={jewelryStyle.id === order.styleId}
+                                checked={jewelryStyle.id === chosenStyle}
                                 value={jewelryStyle.id} /> {jewelryStyle.style}
                         </div>
                     )
