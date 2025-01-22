@@ -9,9 +9,9 @@ import { useEffect, useState } from "react"
 export const NewOrder = ({
     placeOrder, chosenMetal, chosenSize, setModifiedOrder,
     chosenStyle, setChosenMetal, setChosenSize,
-    setChosenStyle, editOrder}) => {
+    setChosenStyle, editOrder }) => {
 
-    const [apiOrder, setAPIOrder] = useState({id: 0})
+    const [apiOrder, setAPIOrder] = useState({ id: 0 })
     const location = useLocation();
 
     setModifiedOrder(location.state.chosenOrder)
@@ -34,16 +34,16 @@ export const NewOrder = ({
         flexDirection: "row",
         justifyContent: "space-evenly",
         columnGap: "5rem"
-      }}>
+    }}>
         <Metals setter={setChosenMetal} chosenMetal={chosenMetal} order={apiOrder} />
         <JewelryStyles setter={setChosenStyle} order={apiOrder} chosenStyle={chosenStyle} />
         <DiamondSizes setter={setChosenSize} order={apiOrder} chosenSize={chosenSize} />
 
         {
             location?.state?.type === "create"
-                ? <OrderButton orderPlacer={placeOrder}  />
-                : <EditOrderButton  orderPlacer={editOrder} />
+                ? <OrderButton orderPlacer={placeOrder} />
+                : <EditOrderButton orderPlacer={editOrder} />
         }
 
-      </article>
+    </article>
 }

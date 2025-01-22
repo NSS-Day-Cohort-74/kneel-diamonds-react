@@ -28,10 +28,10 @@ export const Metals = ({ setter, order, chosenMetal }) => {
                     metals.map(
                         metal => <div key={`metal--${metal.id}`}>
                             <input name="metal"
-                                   onChange={() => setter(metal.id) }
-                                   type="radio"
-                                   checked={metal.id === chosenMetal}
-                                   value={metal.id} /> {metal.metal}
+                                onChange={() => setter(metal.id)}
+                                type="radio"
+                                checked={metal.id === chosenMetal}
+                                value={metal.id} /> {metal.metal}
                         </div>
                     )
                 }
@@ -48,5 +48,5 @@ export const Metals = ({ setter, order, chosenMetal }) => {
         []
     )
 
-    return <> { showMetals() } </>
+    return <> {showMetals()} </>
 }

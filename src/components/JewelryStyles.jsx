@@ -27,7 +27,7 @@ export const JewelryStyles = ({ setter, order, chosenStyle }) => {
                 {
                     jewelryStyles.map(
                         jewelryStyle => <div key={`jewelryStyle--${jewelryStyle.id}`}>
-                            <input onChange={() => setter(jewelryStyle.id) }
+                            <input onChange={() => setter(jewelryStyle.id)}
                                 name="jewelryStyle"
                                 type="radio"
                                 checked={jewelryStyle.id === chosenStyle}

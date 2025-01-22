@@ -28,10 +28,10 @@ export const DiamondSizes = ({ setter, order, chosenSize }) => {
                     diamondSizes.map(
                         diamondSize => <div key={`diamondSize--${diamondSize.id}`}>
                             <input name="diamondSize"
-                                   type="radio"
-                                   checked={diamondSize.id === chosenSize}
-                                   onChange={() => setter(diamondSize.id) }
-                                   value={diamondSize.id}  /> {diamondSize.carets}
+                                type="radio"
+                                checked={diamondSize.id === chosenSize}
+                                onChange={() => setter(diamondSize.id)}
+                                value={diamondSize.id} /> {diamondSize.carets}
                         </div>
                     )
                 }
